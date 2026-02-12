@@ -1,0 +1,5 @@
+datasets==4.0.0
+transformers==4.55.3
+fire==0.7.1
+elasticsearch==9.1.1
+vllm==0.8.5.post1
