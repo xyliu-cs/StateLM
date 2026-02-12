@@ -841,7 +841,7 @@ class StateLM:
         tries, max_tries = 0, 0
         while True:
             try:
-                resp = self.openai_client.chat.completions.create(**body_kwargs)
+                resp = self.vllm_client.chat.completions.create(**body_kwargs)
                 self.api_call_counter += 1
                 if getattr(self, "logger", None):
                     self.logger.log_api_call(body_kwargs, resp.model_dump(), self.api_call_counter)

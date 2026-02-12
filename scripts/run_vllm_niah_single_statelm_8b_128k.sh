@@ -5,14 +5,14 @@ set -u
 export ES_HOST="https://localhost:9200"
 export ES_USER="elastic"
 export ES_PASS="your_password"
-export ES_CA_CERT="http_ca.crt"
+export ES_CA_CERT="/path/to/http_ca.crt"
 
-PROJECT_BASE="/path/to/your/project/base"
+PROJECT_BASE="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$PROJECT_BASE" || { echo "Failed to cd to PROJECT_BASE"; exit 1; }
 
 SAVE_DIR="/path/to/your/save/directory"
 RUN_ID="StateLM-8B-128K"
-OPENAI_FILE="openai_endpoint.json"
+OPENAI_FILE="StateLM/openai_endpoint_example.json"
 
 DATASET=lindsay21/niah-single
 SPLITS=(

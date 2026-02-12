@@ -5,16 +5,16 @@ set -u
 export ES_HOST="https://localhost:9200"
 export ES_USER="elastic"
 export ES_PASS="your_password"
-export ES_CA_CERT="http_ca.crt"
+export ES_CA_CERT="/path/to/http_ca.crt"
 
-PROJECT_BASE="/path/to/your/project/base"
+PROJECT_BASE="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$PROJECT_BASE" || { echo "Failed to cd to PROJECT_BASE"; exit 1; }
 
 
 SAVE_DIR="/path/to/your/save/directory"
 
 RUN_ID="StateLM-8B"
-OPENAI_FILE="openai_endpoint.json"
+OPENAI_FILE="StateLM/openai_endpoint_example.json"
 
 DATASET=lindsay21/InfiniteBench
 SPLITS=("longbook_choice_eng")
@@ -35,7 +35,7 @@ MAX_OUTPUT_TOKENS=2048
 # prompts are stored in tools_and_prompt/prompts.py
 SYSTEM_PROMPT_NAME="STATELM_SYSTEM_PROMPT"
 
-TOOL_CONFIG_PATH="StateLM/tools_and_prompt/statelm_tools_optimized.json"
+TOOL_CONFIG_PATH="StateLM/tools_and_prompt/statelm_tools.json"
 
 for i in {1..5}; do
     for SPLIT in ${SPLITS[@]}; do
@@ -64,8 +64,7 @@ for i in {1..5}; do
             --tokenizer_path Qwen/Qwen3-8B \
             --max_turns_to_fail $MAX_TURNS_TO_FAIL \
             --n_proc 1 \
-            --resume False \
-            --version v4opt
+            --resume False
 
         python StateLM/inference/compute_scores.py compute_scores \
             --preds_path "$OUTPUT_FP" \
