@@ -637,7 +637,7 @@ class StateLM:
     def _get_system_prompt_text(self, system_prompt_name=None):
         if system_prompt_name is None:
             system_prompt_name = "STATELM_SYSTEM_PROMPT"
-        from LC_Agent.tools_and_prompt import prompts
+        from StateLM.tools_and_prompt import prompts
         system_prompt = getattr(prompts, system_prompt_name)
         print(f"[INFO] Using system prompt: {system_prompt_name}")
         return system_prompt
@@ -794,16 +794,10 @@ class StateLM:
                 msg_id = msg["msg_id"]
                 msg_id_ia = msg["msg_id(invoking_assistant)"]
                 tool_use_id = msg["tool_use_id"]
-                tool_result_content_cp = deepcopy(msg["content"])  # 深拷贝以避免修改原始内容
+                tool_result_content_cp = deepcopy(msg["content"])
                 tool_result_content_cp["msg_id"] = msg_id    # we need to ensure msg_id is included in the result
                 tool_result_content_cp["msg_id(invoking_assistant)"] = msg_id_ia
                 if msg_id in self.deleted_msg_ids:
-                    # if "retrieved_chunks" in tool_result_content_cp:
-                    #     # 如果是检索结果，删除内容以节省空间
-                    #     tool_result_content_cp["retrieved_chunks"] = []
-                    #     tool_result_content_cp["status"] = "success"
-                    #     tool_result_content_cp["message"] = "Content has been deleted to save space."
-                    #     tool_result_content_cp["original_tool"] = msg.get("tool_name", "unknown")
                     tool_name = msg.get("tool_name", "unknown")
                     if tool_name not in ["nextChunk", "readChunk", "note", "updateNote"]:
                         print(f"[INFO] Attempting to delete {msg.get('tool_name', 'unknown')}")
@@ -962,7 +956,6 @@ class StateLM:
                         "tool_name": action
                     })
                     
-                    # 限制输出长度
                     result_preview = json.dumps(result, ensure_ascii=False)
                     if len(result_preview) > 200:
                         result_preview = result_preview[:200] + "..."

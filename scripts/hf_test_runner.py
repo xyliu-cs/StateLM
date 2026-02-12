@@ -32,8 +32,8 @@ def _import_statelm(version: str):
     Import the statelm from statelm.py.
     """
     try:
-        from LC_Agent.statelm.statelm import StateLM
-        from LC_Agent.statelm.statelm import ExecLogger
+        from StateLM.src.statelm import StateLM
+        from StateLM.src.statelm import ExecLogger
     except Exception as e:
         raise ImportError(
             "Could not import StateLM and ExecLogger from statelm.py. "

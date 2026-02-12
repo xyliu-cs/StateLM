@@ -42,7 +42,7 @@ MAX_OUTPUT_TOKENS=1024
 
 # prompts are stored in tools_and_prompt/prompts.py
 SYSTEM_PROMPT_NAME="STATELM_SYSTEM_PROMPT"
-TOOL_CONFIG_PATH="LC_Agent/tools_and_prompt/statelm_tools_without_search.json"
+TOOL_CONFIG_PATH="StateLM/tools_and_prompt/statelm_tools_without_search.json"
 
 for i in {1..5}; do
   TRAJECTORIES_TIME=${TRAJECTORIES_DIR}/$(date +%Y%m%d_%H%M%S)
@@ -52,7 +52,7 @@ for i in {1..5}; do
     RESULTS_SAVE_DIR=${RESULTS_TIME}/${SPLIT}
     OUTPUT_DIR=${RESULTS_DIR}/${SPLIT}_$(date +%Y%m%d_%H%M%S)
     OUTPUT_FP=${OUTPUT_DIR}/${SPLIT}_generations.jsonl
-    python -m LC_Agent.scripts.hf_test_runner eval_hfds_statelm \
+    python -m StateLM.scripts.hf_test_runner eval_hfds_statelm \
         --vllm_cfg $OPENAI_FILE \
         --temperature $TEMP \
         --top_p $TOP_P \
@@ -65,11 +65,11 @@ for i in {1..5}; do
         --system_prompt_name $SYSTEM_PROMPT_NAME \
         --dataset_name $DATASET \
         --dataset_split $SPLIT \
-        --item_to_question LC_Agent/inference/hf_process_fns.py:ruler_niah_i2q \
-        --item_to_context LC_Agent/inference/hf_process_fns.py:ruler_niah_i2c \
-        --item_to_answer  LC_Agent/inference/hf_process_fns.py:ruler_niah_i2a \
-        --item_to_meta LC_Agent/inference/hf_process_fns.py:ruler_niah_i2meta \
-        --output_postprocess LC_Agent/inference/hf_process_fns.py:ruler_niah_postprocess \
+        --item_to_question StateLM/inference/hf_process_fns.py:ruler_niah_i2q \
+        --item_to_context StateLM/inference/hf_process_fns.py:ruler_niah_i2c \
+        --item_to_answer  StateLM/inference/hf_process_fns.py:ruler_niah_i2a \
+        --item_to_meta StateLM/inference/hf_process_fns.py:ruler_niah_i2meta \
+        --output_postprocess StateLM/inference/hf_process_fns.py:ruler_niah_postprocess \
         --correct_answer_key "outputs" \
         --model_answer_key "pred" \
         --trajectory_dir $TRAJECTORIES_SAVE_DIR \
@@ -81,7 +81,7 @@ for i in {1..5}; do
         --resume False \
         --version niah
 
-    cd LC_Agent/inference
+    cd StateLM/inference
     python evaluate.py \
         --data_dir "${OUTPUT_DIR}" \
         --benchmark "${BENCHMARK}" \

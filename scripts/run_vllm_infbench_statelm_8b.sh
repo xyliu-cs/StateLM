@@ -35,14 +35,14 @@ MAX_OUTPUT_TOKENS=2048
 # prompts are stored in tools_and_prompt/prompts.py
 SYSTEM_PROMPT_NAME="STATELM_SYSTEM_PROMPT"
 
-TOOL_CONFIG_PATH="LC_Agent/tools_and_prompt/statelm_tools_optimized.json"
+TOOL_CONFIG_PATH="StateLM/tools_and_prompt/statelm_tools_optimized.json"
 
 for i in {1..5}; do
     for SPLIT in ${SPLITS[@]}; do
         OUTPUT_FP=${RESULTS_DIR}/${SPLIT}_generations_$(date +%Y%m%d_%H%M%S).jsonl
         TRAJECTORIES_SAVE_DIR=${TRAJECTORIES_DIR}/$(date +%Y%m%d_%H%M%S)
         RESULTS_SAVE_DIR=${RESULTS_DIR}/$(date +%Y%m%d_%H%M%S)
-        python -m LC_Agent.scripts.hf_test_runner eval_hfds_statelm \
+        python -m StateLM.scripts.hf_test_runner eval_hfds_statelm \
             --vllm_cfg $OPENAI_FILE \
             --temperature $TEMP \
             --top_p $TOP_P \
@@ -55,9 +55,9 @@ for i in {1..5}; do
             --system_prompt_name $SYSTEM_PROMPT_NAME \
             --dataset_name $DATASET \
             --dataset_split $SPLIT \
-            --item_to_question LC_Agent/inference/hf_process_fns.py:infinitebench_${SPLIT}_i2q \
-            --item_to_context LC_Agent/inference/hf_process_fns.py:infinitebench_${SPLIT}_i2c \
-            --item_to_answer  LC_Agent/inference/hf_process_fns.py:infinitebench_${SPLIT}_i2a \
+            --item_to_question StateLM/inference/hf_process_fns.py:infinitebench_${SPLIT}_i2q \
+            --item_to_context StateLM/inference/hf_process_fns.py:infinitebench_${SPLIT}_i2c \
+            --item_to_answer  StateLM/inference/hf_process_fns.py:infinitebench_${SPLIT}_i2a \
             --trajectory_dir $TRAJECTORIES_SAVE_DIR \
             --result_dir $RESULTS_SAVE_DIR \
             --output_fp $OUTPUT_FP \
@@ -67,7 +67,7 @@ for i in {1..5}; do
             --resume False \
             --version v4opt
 
-        python LC_Agent/inference/compute_scores.py compute_scores \
+        python StateLM/inference/compute_scores.py compute_scores \
             --preds_path "$OUTPUT_FP" \
             --task_name $SPLIT \
             --model_name $RUN_ID \
@@ -75,7 +75,7 @@ for i in {1..5}; do
             --pred_key "final_answer" \
             --results_output $RESULT_TXT
 
-        python LC_Agent/inference/compute_scores.py evaluate_choice_file \
+        python StateLM/inference/compute_scores.py evaluate_choice_file \
             --file_path "$OUTPUT_FP" \
             --label_key "correct_answer" \
             --pred_key "final_answer"
