@@ -5,10 +5,8 @@
   <strong>💻 <a href="https://github.com/xyliu-cs/StateLM">Repo</a></strong>
 </p>
 
-
 StateLM is a language model agent equipped with specialized frameworks for diverse tasks such as long-context reasoning, and deep research.
-
-
+<img src="assets/demo.gif" width="800">
 
 ## Overview
 <img src="assets/statelm.png" alt="StateLM Overview" width="800px" />
@@ -110,6 +108,9 @@ By default, the output will be saved to a JSONL file in the format of
 }
 ```
 You need to define the grading functions for this kind of output. Example grading functions are defined in `inference/compute_scores.py`.
+
+## Training
+Please refer to our RL implementation based on verl v0.6.0 in `verl/`.
 
 ## Citation
 ```bibtex
