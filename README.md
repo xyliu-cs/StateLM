@@ -1,7 +1,7 @@
 # StateLM
 <p align="center">
   <strong>🤗 <a href="https://huggingface.co/collections/lindsay21/statelm">Models</a></strong> |
-  <strong>📝 <a href="https://huggingface.co/collections/lindsay21/statelm">Paper</a></strong> |
+  <strong>📝 <a href="https://arxiv.org/abs/2602.12108">Paper</a></strong> |
   <strong>💻 <a href="https://github.com/xyliu-cs/StateLM">Repo</a></strong>
 </p>
 
@@ -113,5 +113,13 @@ You need to define the grading functions for this kind of output. Example gradin
 
 ## Citation
 ```bibtex
-toupdate
+@misc{liu2026pensieveparadigmstatefullanguage,
+      title={The Pensieve Paradigm: Stateful Language Models Mastering Their Own Context}, 
+      author={Xiaoyuan Liu and Tian Liang and Dongyang Ma and Deyu Zhou and Haitao Mi and Pinjia He and Yan Wang},
+      year={2026},
+      eprint={2602.12108},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2602.12108}, 
+}
 ```
